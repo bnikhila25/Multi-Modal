@@ -15,7 +15,8 @@ Usage:
     python code/evaluation/main.py
 
 Environment:
-    ANTHROPIC_API_KEY must be set.
+    GEMINI_API_KEY must be set in shell or .env file at repo root.
+    Get your FREE key at: https://aistudio.google.com
 """
 
 import os
@@ -41,7 +42,7 @@ from preprocessor import (
 from llm_agent import analyze_claim, STRATEGIES
 from postprocessor import postprocess
 
-# Inter-call delay (seconds) — keeps us well within 50 RPM
+# Inter-call delay (seconds) — keeps us well within Gemini free tier limits
 INTER_CALL_DELAY = 2.0
 
 # ---------------------------------------------------------------------------
@@ -422,7 +423,7 @@ def _write_report(
         "",
         "**Pipeline**: `code/evaluation/main.py`  ",
         f"**Sample size**: {len(samples)} rows (`dataset/sample_claims.csv`)  ",
-        "**Model**: `claude-sonnet-4-6`  ",
+        "**Model**: `gemini-1.5-flash` (Google AI Studio — free tier)  ",
         "",
         "---",
         "",
@@ -548,7 +549,7 @@ def _write_report(
         "",
         "### Model",
         "",
-        "- **Model**: `claude-sonnet-4-6`",
+        "- **Model**: `gemini-1.5-flash` (Google AI Studio — free tier)",
         "- **Max tokens per call**: 1,200 (output only)",
         "- **Calls per claim**: 1 (all images sent in a single multi-modal message)",
         "",
@@ -590,9 +591,10 @@ def _write_report(
         "",
         "### Cost Estimate",
         "",
-        "Pricing assumptions for `claude-sonnet-4-6`:",
-        "- Input: $3.00 / 1M tokens",
-        "- Output: $15.00 / 1M tokens",
+        "Pricing assumptions for `gemini-1.5-flash` (Google AI Studio free tier):",
+        "- Free tier: 1,500 requests/day, 1M token context window",
+        "- Paid tier (if needed): Input $0.075/1M tokens, Output $0.30/1M tokens",
+        "- Sign up free at: https://aistudio.google.com",
         "",
         "| Phase | Input Cost | Output Cost | Total |",
         "|---|---|---|---|",
@@ -612,7 +614,7 @@ def _write_report(
         "",
         "### TPM / RPM Considerations",
         "",
-        "- Claude Sonnet rate limits (Tier 1): 50 RPM, 40,000 TPM",
+        "- Gemini 1.5 Flash free tier limits: 15 RPM, 1,500 req/day, 1M tokens/min",
         "- Effective rate with 2s inter-call delay: ~25 RPM (50% of limit)",
         "- Per-call token usage ~3,400–3,600 input tokens",
         "- At 25 RPM: ~85,000–90,000 TPM → **exceeds 40k TPM limit**",
@@ -620,7 +622,7 @@ def _write_report(
         "**TPM mitigation strategy applied:**",
         "- The 2s delay limits RPM to ~25 but does not fully solve TPM due to large images",
         "- If TPM errors occur: increase `INTER_CALL_DELAY` to 4–6s to reduce effective TPM",
-        "- Alternative: use `anthropic.beta.prompt_caching` to cache the system prompt",
+        "- Alternative: use Gemini context caching to cache the system prompt",
         "  (~30% input token reduction), bringing per-call tokens to ~2,400–2,500",
         "- Resume support (`--resume N`) allows restarting without reprocessing",
         "",
@@ -634,7 +636,7 @@ def _write_report(
         "| Streaming row-by-row output | ✅ | Append mode; partial runs safe |",
         "| Shared lookup table caching | ✅ | History + evidence loaded once |",
         "| Image loaded once per claim | ✅ | No repeated disk reads |",
-        "| Prompt caching (Anthropic beta) | ❌ | Not implemented; reduces cost ~30% |",
+        "| Prompt caching (Gemini context cache) | ❌ | Not implemented; reduces cost ~30% |",
         "| Parallel batch processing | ❌ | Not implemented; would need TPM budgeting |",
     ]
 
