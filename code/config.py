@@ -23,9 +23,10 @@ OUTPUT_CSV          = os.path.join(ROOT_DIR, "output.csv")
 EVAL_REPORT_MD      = os.path.join(ROOT_DIR, "code", "evaluation", "evaluation_report.md")
 
 # ---------------------------------------------------------------------------
-# Anthropic model
+# Google Gemini model (free via Google AI Studio)
+# Get your free API key at: https://aistudio.google.com
 # ---------------------------------------------------------------------------
-CLAUDE_MODEL = "claude-sonnet-4-6"
+GEMINI_MODEL = "gemini-1.5-flash"   # free tier: 1,500 req/day, 1M token context
 MAX_TOKENS   = 1200   # per call — enough for structured JSON output
 
 # ---------------------------------------------------------------------------
