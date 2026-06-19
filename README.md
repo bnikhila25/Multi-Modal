@@ -1,3 +1,44 @@
+# ⚡ GEMINI SETUP (FREE — replaces Anthropic API)
+
+This project has been converted from Anthropic Claude to **Google Gemini** (free).
+
+## Get Your Free API Key (30 seconds)
+1. Go to **https://aistudio.google.com**
+2. Sign in with your Google account
+3. Click **"Get API Key"** → **"Create API key"**
+4. Copy your key
+
+## Configure the Key
+```bash
+# Copy the example env file
+cp .env.example .env
+
+# Open .env and paste your key:
+# GEMINI_API_KEY=AIza...your-key-here...
+```
+
+## Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+## Run
+```bash
+python code/main.py              # Strategy B (default, best)
+python code/main.py --strategy A # Strategy A (direct)
+python code/evaluation/main.py   # Run evaluation
+```
+
+## Free Tier Limits (more than enough)
+| Limit | Value |
+|-------|-------|
+| Requests/day | **1,500** |
+| Requests/min | 15 RPM |
+| Token context | **1,000,000** |
+| Cost | **$0** |
+
+---
+
 # Multi-Modal Evidence Review — Solution
 
 ## Repository Layout
