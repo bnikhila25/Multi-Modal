@@ -11,7 +11,8 @@ Usage:
     python code/main.py --resume 10      # resume from row 10
 
 Environment:
-    ANTHROPIC_API_KEY must be set in shell or .env file at repo root.
+    GEMINI_API_KEY must be set in shell or .env file at repo root.
+    Get your FREE key at: https://aistudio.google.com
 """
 import os
 import sys
@@ -23,7 +24,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from dotenv import load_dotenv
 load_dotenv()
 
-from config import CLAIMS_CSV, OUTPUT_CSV
+from config import CLAIMS_CSV, OUTPUT_CSV, GEMINI_MODEL
 from data_loader import (
     load_claims, load_user_history, load_evidence_requirements,
     load_images_for_claim, get_user_risk_summary, get_evidence_requirement,
