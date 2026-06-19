@@ -25,6 +25,11 @@ import time
 import anthropic
 from config import CLAUDE_MODEL, MAX_TOKENS
 
+# ---------------------------------------------------------------------------
+# API Key — set your Anthropic API key here
+# ---------------------------------------------------------------------------
+ANTHROPIC_API_KEY = "sk-ant-api03-xxxxxxxxxxxxxxxxxxxx"
+
 # Singleton client
 _client = None
 
@@ -32,7 +37,7 @@ _client = None
 def get_client() -> anthropic.Anthropic:
     global _client
     if _client is None:
-        _client = anthropic.Anthropic()
+        _client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     return _client
 
 
